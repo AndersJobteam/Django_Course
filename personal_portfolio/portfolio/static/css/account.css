@@ -1,0 +1,50 @@
+.account-page {
+    width: min(500px, calc(100% - 3rem));
+    margin: 4rem auto;
+    color: #ffffff;
+}
+
+.account-switch {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    margin-bottom: 2rem;
+    padding: 0.25rem;
+    background-color: #2b2f33;
+    border-radius: 999px;
+}
+
+.account-switch-option {
+    position: relative;
+    z-index: 1;
+    padding: 0.65rem 1rem;
+    color: #ffffff;
+    text-align: center;
+    text-decoration: none;
+}
+
+.account-switch-slider {
+    position: absolute;
+    top: 0.25rem;
+    bottom: 0.25rem;
+    left: 0.25rem;
+    width: calc(50% - 0.25rem);
+    background-color: #0d6efd;
+    border-radius: 999px;
+    transition: transform 0.2s ease;
+}
+
+.account-switch-slider.right {
+    transform: translateX(100%);
+}
+
+.account-form {
+    padding: 2rem;
+    background-color: #2b2f33;
+    border-radius: 12px;
+}
+
+.account-form h1 {
+    margin-top: 0;
+    margin-bottom: 1.5rem;
+}

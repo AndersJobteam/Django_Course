@@ -1,0 +1,62 @@
+.project-detail {
+    max-width: 800px;
+    margin: 3rem auto;
+    padding: 0 1.5rem 4rem;
+    color: #ffffff;
+}
+
+.project-detail > img {
+    display: block;
+    width: 100%;
+    height: auto;
+    max-height: 500px;
+    object-fit: contain;
+    background-color: #1e2022;
+    border-radius: 12px;
+    margin: 1.5rem 0;
+}
+
+.comments {
+    margin-top: 3rem;
+}
+
+.comment {
+    padding: 1rem 0;
+    border-bottom: 1px solid #454a4f;
+}
+
+.comment time {
+    margin-left: 0.75rem;
+    color: #aeb5ba;
+}
+
+.delete-comment-link {
+    padding: 0;
+    border: 0;
+    background: none;
+    color: #ff8f8f;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.delete-comment-link:hover {
+    color: #ffb3b3;
+}
+
+.comments form {
+    max-width: 500px;
+}
+
+.comments form input,
+.comments form textarea {
+    display: block;
+    box-sizing: border-box;
+    width: 100%;
+    margin-top: 0.35rem;
+    padding: 0.7rem;
+}
+
+.comments form button {
+    padding: 0.7rem 1rem;
+    cursor: pointer;
+}

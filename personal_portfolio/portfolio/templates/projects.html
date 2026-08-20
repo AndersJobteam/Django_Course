@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/projects.css' %}">
+{% endblock %}
+
+{% block content %}
+{% include "components/navbar.html" %}
+
+<main class="projects" aria-labelledby="projects-title">
+    <h1 id="projects-title">Projects</h1>
+    <div class="project-grid">
+        {% for project in projects %}
+        {% include "components/project_card.html" with project=project %}
+        {% empty %}
+        <p>No projects yet.</p>
+        {% endfor %}
+    </div>
+</main>
+{% endblock %}

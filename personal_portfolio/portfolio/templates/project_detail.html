@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/project_detail.css' %}">
+{% endblock %}
+
+{% block content %}
+{% include "components/navbar.html" %}
+
+<main class="project-detail">
+    <button type="button" class="btn btn-secondary" onclick="window.history.back()"><-- Back</button>
+            <h1>{{ project.title }}</h1>
+            <img src="{{ project.image.url }}" alt="{{ project.title }}">
+            <p>{{ project.description }}</p>
+
+            {% if project.url %}
+            <button type="button" class="btn btn-secondary" onclick="window.open('{{ project.url }}', '_blank')">
+                <span><img src="/static/images/github-logo.png" alt="View on Github" width="20" height="20"> View on
+                    Github</span>
+            </button>
+            {% endif %}
+
+            <section class="comments" aria-labelledby="comments-title">
+                <h2 id="comments-title">Comments</h2>
+                {% for comment in comments %}
+                <article class="comment">
+                    <strong>{{ comment.user.username|default:"Deleted user" }}</strong>
+                    <time datetime="{{ comment.created_at|date:'c' }}">
+                        {{ comment.created_at|date:"F j, Y" }}
+                    </time>
+                    {% if user.is_authenticated and comment.user_id == user.id %}
+                    <form method="post" action="{% url 'delete-comment' project.pk comment.pk %}" class="d-inline">
+                        {% csrf_token %}
+                        <button type="submit" class="mb-1 btn btn-link">Delete</button>
+                    </form>
+                    {% endif %}
+                    <p>{{ comment.body }}</p>
+                </article>
+                {% empty %}
+                <p>No comments yet.</p>
+                {% endfor %}
+
+                {% if user.is_authenticated %}
+                <h3>Leave a comment</h3>
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="{{ form.body.id_for_label }}" class="form-label">Comment</label>
+                        {{ form.body }}
+                        {% for error in form.body.errors %}
+                        <div class="text-danger">{{ error }}</div>
+                        {% endfor %}
+                    </div>
+                    <button type="submit" class="btn btn-primary">Post comment</button>
+                </form>
+                {% else %}
+                <p>
+                    <a href="{% url 'account' %}?next={{ request.path|urlencode }}">Log in</a>
+                    to leave a comment.
+                </p>
+                {% endif %}
+            </section>
+</main>
+{% endblock %}

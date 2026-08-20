@@ -1,0 +1,10 @@
+body {
+    background-color: #1e2022;
+}
+
+.navbar {
+    position: sticky;
+    top: 0;
+    overflow: hidden;
+}
+

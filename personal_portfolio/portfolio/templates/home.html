@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/projects.css' %}">
+{% endblock %}
+
+{% block content %}
+{% include "components/navbar.html" %}
+<div id="title">
+    <h1>Anders' Portfolio</h1>
+    <img src="{% static 'images/anders.jpg' %}" alt="Anders" width="200"><br>
+</div>
+
+<section class="projects" aria-labelledby="projects-title">
+    <h2 id="projects-title">Highlighted Projects</h2>
+    <div class="project-grid">
+        {% for project in projects %}
+        {% include "components/project_card.html" with project=project %}
+        {% empty %}
+        <p>No projects yet.</p>
+        {% endfor %}
+    </div>
+</section>
+
+{% endblock %}
