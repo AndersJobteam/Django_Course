@@ -49,13 +49,6 @@ def delete_comment(request, project_pk, comment_pk):
     comment.delete()
     return redirect("project-detail", pk=project.pk)
 
-@login_required
-def edit_comment(request, project_pk, comment_pk):
-    project = get_object_or_404(Project, pk=project_pk)
-    comment = get_object_or_404(project.comments, pk=comment_pk, user=request.user)
-    
-
-
 def account(request):
     action = request.POST.get("action", request.GET.get("action", "login"))
     next_url = request.GET.get("next", request.POST.get("next", "/"))

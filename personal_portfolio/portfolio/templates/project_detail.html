@@ -23,22 +23,33 @@
 
             <section class="comments" aria-labelledby="comments-title">
                 <h2 id="comments-title">Comments</h2>
+
                 {% for comment in comments %}
                 <article class="comment">
-                    <strong>{{ comment.user.username|default:"Deleted user" }}</strong>
-                    <time datetime="{{ comment.created_at|date:'c' }}">
-                        {{ comment.created_at|date:"F j, Y" }}
-                    </time>
-                    {% if user.is_authenticated and comment.user_id == user.id %}
-                    <form method="post" action="{% url 'delete-comment' project.pk comment.pk %}" class="d-inline">
-                        {% csrf_token %}
-                        <button type="submit" class="mb-1 btn btn-link">Delete</button>
-                    </form>
-                    {% endif %}
+                    <span>
+                        <strong>{{ comment.user.username|default:"Deleted user" }}</strong>
+                        <time datetime="{{ comment.created_at|date:'c' }}">
+                            {{ comment.created_at|date:"F j, Y" }}
+                        </time>
+
+                        {% if user.is_authenticated and comment.user_id == user.id %}
+
+                        <form method="delete" action="{% url 'delete-comment' project.pk comment.pk %}"
+                            class="d-inline">
+                            {% csrf_token %}
+                            <button type="submit" class="mb-1 btn btn-link">Delete</button>
+                        </form>
+                        {% endif %}
+
+                    </span>
+
                     <p>{{ comment.body }}</p>
+                    <input value="{{ comment.body }}" hidden>
                 </article>
+
                 {% empty %}
                 <p>No comments yet.</p>
+
                 {% endfor %}
 
                 {% if user.is_authenticated %}
