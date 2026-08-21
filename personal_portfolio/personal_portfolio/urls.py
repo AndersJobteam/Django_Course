@@ -18,21 +18,20 @@ from django.contrib import admin
 from django.urls import path
 from django.conf.urls.static import static
 from django.conf import settings
-from portfolio import views
+from portfolio.views_hub import home, projects, project_detail, delete_comment, account, account_logout
 
 urlpatterns = [
-    path('admin', admin.site.urls),
-    path('', views.home, name='home'),
-    path('projects/', views.projects, name='projects'),
-    path('projects/<int:pk>/', views.project_detail, name='project-detail'),
+    path('admin/', admin.site.urls),
+    path('', home, name='home'),
+    path('projects/', projects, name='projects'),
+    path('projects/<int:pk>/', project_detail, name='project-detail'),
     path(
         'projects/<int:project_pk>/comments/<int:comment_pk>/delete/',
-        views.delete_comment,
+        delete_comment,
         name='delete-comment',
     ),
-    path('projects/<int:project_pk>/comments/<int:comment_pk>/edit/', views.edit_comment, name='edit-comment'),
-    path('accounts/', views.account, name='account'),
-    path('accounts/logout/', views.account_logout, name='account-logout'),
+    path('accounts/', account, name='account'),
+    path('accounts/logout/', account_logout, name='account-logout'),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
