@@ -1,16 +1,22 @@
 from django.shortcuts import get_object_or_404, redirect, render
+from django.core.paginator import Paginator
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from ..forms import ProjectCommentForm
 from ..models import Project
 
-def projects(request, amount: int = 10):
+def projects(request):
     search_query = request.GET.get("search_query", "")
     if search_query:
-        all_projects = Project.objects.filter(Q(title__icontains=search_query) | Q(description__icontains=search_query)).order_by("-id")[:amount]
+        all_projects = Project.objects.filter(Q(title__icontains=search_query) | Q(description__icontains=search_query)).order_by("-id")
     else:
-        all_projects = Project.objects.all().order_by("-id")[:amount]
-    return render(request, "projects.html", {"projects": all_projects, "search_query": search_query})
+        all_projects = Project.objects.all().order_by("-id")
+
+    paginator = Paginator(all_projects, 3)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
+    return render(request, "projects.html", {"projects": page_obj, "search_query": search_query})
 
 
 def project_detail(request, pk):

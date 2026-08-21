@@ -61,5 +61,7 @@
         <p>No projects yet.</p>
         {% endfor %}
     </div>
+    
+    {% include "components/pagination.html" with projects=projects %}
 </main>
 {% endblock %}
