@@ -9,8 +9,52 @@
 {% include "components/navbar.html" %}
 
 <main class="projects" aria-labelledby="projects-title">
+
     <h1 id="projects-title">Projects</h1>
-    <div class="project-grid">
+
+    <search class="d-flex p-2">
+        <div class="input-group mb-3">
+            <input type="text" id="search-input" class="form-control" placeholder="Search title or description"
+                value="{{ search_query }}">
+            <div class="input-group-append">
+                <button class="btn btn-primary" type="button">Search</button>
+            </div>
+        </div>
+        <div>
+            <form method="get" action="{% url 'projects' %}">
+                <button class="ms-3 btn btn-danger">X</button>
+            </form>
+        </div>
+    </search>
+
+    <script>
+        // Debounce function
+        function debounce(func, timeout = 500) {
+            let timer;
+            return (...args) => {
+                clearTimeout(timer);
+                timer = setTimeout(() => { func.apply(this, args); }, timeout);
+            };
+        }
+
+        // Search handler
+        function handleSearch() {
+            const query = document.getElementById('search-input').value;
+            if (query.trim()) {
+                window.location.search = `?search_query=${encodeURIComponent(query)}`;
+            } else {
+                window.location.search = '';
+            }
+        }
+
+        // Attach debounced event listener
+        document.getElementById('search-input').addEventListener(
+            'input',
+            debounce(handleSearch, 500)
+        );
+    </script>
+
+    <div class=" project-grid">
         {% for project in projects %}
         {% include "components/project_card.html" with project=project %}
         {% empty %}

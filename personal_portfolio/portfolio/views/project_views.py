@@ -5,7 +5,7 @@ from ..forms import ProjectCommentForm
 from ..models import Project
 
 def projects(request, amount: int = 10):
-    search_query = request.GET.get("search_query", None)
+    search_query = request.GET.get("search_query", "")
     if search_query:
         all_projects = Project.objects.filter(Q(title__icontains=search_query) | Q(description__icontains=search_query)).order_by("-id")[:amount]
     else:
